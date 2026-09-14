@@ -221,5 +221,4 @@ namespace miit::algebra
 
 }
 
-// Явное инстанцирование шаблона для int
 template class miit::algebra::Matrix<int>;
