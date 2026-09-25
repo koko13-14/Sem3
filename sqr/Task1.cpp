@@ -1,7 +1,7 @@
 #include "Task1.h"
 #include <cstdlib>
 
-miit::algebra::Task1::Task1(Matrix<int>* matrix)
+miit::algebra::Task1::Task1(Matrix<int>& matrix)
     : Exercise(matrix)
 {
 }
