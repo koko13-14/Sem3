@@ -1,6 +1,6 @@
 #include "Task2.h"
 
-miit::algebra::Task2::Task2(Matrix<int>* matrix)
+miit::algebra::Task2::Task2(Matrix<int>& matrix)
     : Exercise(matrix)
 {
 }
