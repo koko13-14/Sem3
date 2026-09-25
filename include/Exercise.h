@@ -17,12 +17,12 @@ namespace miit::algebra
          * @brief Конструктор.
          * @param matrix Указатель на матрицу.
          */
-        Exercise(Matrix<int>* matrix);
+        Exercise(Matrix<int>& matrix);
 
         /**
          * @brief Виртуальный деструктор.
          */
-        virtual ~Exercise();
+        virtual ~Exercise() = default;
 
         /**
          * @brief Решить задание.
