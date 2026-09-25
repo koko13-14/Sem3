@@ -139,7 +139,7 @@ namespace miit::algebra
     }
 
     template <typename T>
-    void Matrix<T>::fill(Generator& generator)
+    void Matrix<T>::fill(const Generator& generator)
     {
         for (size_t i = 0; i < this->rows; ++i)
         {
