@@ -108,7 +108,7 @@ namespace miit::algebra
          * @brief Заполнить матрицу с помощью генератора.
          * @param generator Генератор значений.
          */
-        void fill(Generator& generator);
+        void fill(const Generator& generator);
 
         /**
          * @brief Преобразовать матрицу в строку.
