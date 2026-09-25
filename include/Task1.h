@@ -15,7 +15,7 @@ namespace miit::algebra
          * @brief Конструктор.
          * @param matrix Указатель на матрицу.
          */
-        Task1(Matrix<int>* matrix);
+        Task1(Matrix<int>& matrix);
 
         /**
          * @brief Выполнить задание.
