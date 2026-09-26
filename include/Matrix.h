@@ -107,32 +107,6 @@ namespace miit::algebra
         std::string toString() const;
 
         /**
-         * @brief Вставить строку после указанной позиции.
-         * @param row Строка для вставки.
-         * @param pos Индекс, после которого вставлять.
-         */
-        void insertRowAfter(const std::vector<T>& row, const size_t pos);
-
-        /**
-         * @brief Удалить строку по индексу.
-         * @param pos Индекс строки.
-         */
-        void removeRow(const size_t pos);
-
-        /**
-         * @brief Удалить столбец по индексу.
-         * @param pos Индекс столбца.
-         */
-        void removeColumn(const size_t pos);
-
-        /**
-         * @brief Вставить столбец после указанной позиции.
-         * @param col Столбец для вставки.
-         * @param pos Индекс, после которого вставлять.
-         */
-        void insertColumnAfter(const std::vector<T>& col, const size_t pos);
-
-        /**
          * @brief Обменять две матрицы.
          */
         void swap(Matrix& other) noexcept;
