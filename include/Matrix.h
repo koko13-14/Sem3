@@ -110,6 +110,8 @@ namespace miit::algebra
          * @brief Обменять две матрицы.
          */
         void swap(Matrix& other) noexcept;
+
+        friend class Task2;
     };
 
 
