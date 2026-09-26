@@ -12,14 +12,16 @@ void miit::algebra::Task2::solve()
         return;
     }
 
-    std::vector<int> firstRow = (*this->matrix)[0];
+    std::vector<int> firstRow = this->matrix->data[0];
 
-    for (size_t i = this->matrix->getRows(); i > 0; --i)
+    for (size_t i = this->matrix->rows; i > 0; --i)
     {
-        size_t index = i - 1; 
-        if ((index + 1) % 2 == 0)
+        size_t index = i - 1;
+
+        if (index % 2 == 1)
         {
-            this->matrix->insertRowAfter(firstRow, index);
+            this->matrix->data.insert(this->matrix->data.begin() + index + 1, firstRow);
+            ++this->matrix->rows;
         }
     }
 }
