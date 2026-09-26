@@ -115,30 +115,6 @@ namespace miit::algebra
     }
 
     template <typename T>
-    void Matrix<T>::setRows(const size_t newRows)
-    {
-        this->rows = newRows;
-        this->data.resize(newRows);
-        for (size_t i = 0; i < newRows; ++i)
-        {
-            if (this->data[i].size() != this->cols)
-            {
-                this->data[i].resize(this->cols);
-            }
-        }
-    }
-
-    template <typename T>
-    void Matrix<T>::setCols(const size_t newCols)
-    {
-        this->cols = newCols;
-        for (size_t i = 0; i < this->rows; ++i)
-        {
-            this->data[i].resize(newCols);
-        }
-    }
-
-    template <typename T>
     void Matrix<T>::fill(const Generator& generator)
     {
         for (size_t i = 0; i < this->rows; ++i)
