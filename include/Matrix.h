@@ -95,16 +95,6 @@ namespace miit::algebra
         size_t getCols() const;
 
         /**
-         * @brief Изменить количество строк.
-         */
-        void setRows(const size_t newRows);
-
-        /**
-         * @brief Изменить количество столбцов.
-         */
-        void setCols(const size_t newCols);
-
-        /**
          * @brief Заполнить матрицу с помощью генератора.
          * @param generator Генератор значений.
          */
