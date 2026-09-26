@@ -12,6 +12,25 @@
 using namespace std;
 using namespace miit::algebra;
 
+namespace
+{
+    constexpr int kMenuRandom    = 1;
+    constexpr int kMenuIStream   = 2;
+    constexpr int kMenuZero      = 3;
+    constexpr int kMenuConstant  = 4;
+
+    constexpr int kDefaultMinValue = -100;
+    constexpr int kDefaultMaxValue =  100;
+
+    const char* const kMenuText =
+        "\nВыберите способ заполнения:\n"
+        "1 - случайными числами\n"
+        "2 - вводом с клавиатуры\n"
+        "3 - нулями\n"
+        "4 - константным значением\n"
+        "Ваш выбор: ";
+}
+
 /**
  * @brief Точка входа в программу.
  */
@@ -29,12 +48,7 @@ int main()
 
     Matrix<int> matrix(rows, cols);
 
-    cout << "\nВыберите способ заполнения:\n";
-    cout << "1 - случайными числами\n";
-    cout << "2 - вводом с клавиатуры\n";
-    cout << "3 - нулями\n";
-    cout << "4 - константным значением\n";
-    cout << "Ваш выбор: ";
+    cout << kMenuText;
 
     int choice = 0;
     cin >> choice;
@@ -43,16 +57,16 @@ int main()
 
     switch (choice)
     {
-    case 1:
-        generator = make_unique<RandomGenerator>(-100, 100);
+    case kMenuRandom:
+        generator = make_unique<RandomGenerator>(kDefaultMinValue, kDefaultMaxValue);
         break;
-    case 2:
+    case kMenuIStream:
         generator = make_unique<IStreamGenerator>(cin);
         break;
-    case 3:
+    case kMenuZero:
         generator = make_unique<ZeroGenerator>();
         break;
-    case 4:
+    case kMenuConstant:
     {
         int value = 0;
         cout << "Введите константу: ";
@@ -62,7 +76,7 @@ int main()
     }
     default:
         cout << "Неверный выбор. Используется генератор случайных чисел.\n";
-        generator = make_unique<RandomGenerator>(-100, 100);
+        generator = make_unique<RandomGenerator>(kDefaultMinValue, kDefaultMaxValue);
         break;
     }
 
