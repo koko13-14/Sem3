@@ -72,12 +72,20 @@ namespace miit::algebra
     template <typename T>
     vector<T>& Matrix<T>::operator[](const size_t index)
     {
+        if (index >= this->rows)
+        {
+            throw std::out_of_range("Matrix: index out of range");
+        }
         return this->data[index];
     }
 
     template <typename T>
     const vector<T>& Matrix<T>::operator[](const size_t index) const
     {
+        if (index >= this->rows)
+        {
+            throw std::out_of_range("Matrix: index out of range");
+        }
         return this->data[index];
     }
 
