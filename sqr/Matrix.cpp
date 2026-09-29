@@ -44,11 +44,6 @@ namespace miit::algebra
     }
 
     template <typename T>
-    Matrix<T>::~Matrix()
-    {
-    }
-
-    template <typename T>
     Matrix<T>& Matrix<T>::operator=(const Matrix& other)
     {
         if (this != &other)
