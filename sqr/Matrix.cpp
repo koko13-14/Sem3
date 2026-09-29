@@ -1,0 +1,167 @@
+#include "Matrix.h"
+#include <sstream>
+#include <stdexcept>
+
+using namespace std;
+
+namespace miit::algebra
+{
+    template <typename T>
+    Matrix<T>::Matrix()
+        : rows{ 0 }, cols{ 0 }
+    {
+    }
+
+    template <typename T>
+    Matrix<T>::Matrix(const size_t rows, const size_t cols)
+        : data(rows, std::vector<T>(cols)),
+          rows{ rows },
+          cols{ cols }
+    {
+    }
+
+    template <typename T>
+    Matrix<T>::Matrix(const size_t rows, const size_t cols, const Generator& generator)
+        : data(rows, std::vector<T>(cols)),
+          rows{ rows },
+          cols{ cols }
+    {
+        this->fill(generator);
+    }
+
+    template <typename T>
+    Matrix<T>::Matrix(const Matrix& other)
+        : data{ other.data }, rows{ other.rows }, cols{ other.cols }
+    {
+    }
+
+    template <typename T>
+    Matrix<T>::Matrix(Matrix&& other) noexcept
+        : data{ move(other.data) }, rows{ other.rows }, cols{ other.cols }
+    {
+        other.rows = 0;
+        other.cols = 0;
+    }
+
+    template <typename T>
+    Matrix<T>& Matrix<T>::operator=(const Matrix& other)
+    {
+        if (this != &other)
+        {
+            this->data = other.data;
+            this->rows = other.rows;
+            this->cols = other.cols;
+        }
+        return *this;
+    }
+
+    template <typename T>
+    Matrix<T>& Matrix<T>::operator=(Matrix&& other) noexcept
+    {
+        if (this != &other)
+        {
+            this->data = move(other.data);
+            this->rows = other.rows;
+            this->cols = other.cols;
+            other.rows = 0;
+            other.cols = 0;
+        }
+        return *this;
+    }
+
+    template <typename T>
+    vector<T>& Matrix<T>::operator[](const size_t index)
+    {
+        if (index >= this->rows)
+        {
+            throw std::out_of_range("Matrix: index out of range");
+        }
+        return this->data[index];
+    }
+
+    template <typename T>
+    const vector<T>& Matrix<T>::operator[](const size_t index) const
+    {
+        if (index >= this->rows)
+        {
+            throw std::out_of_range("Matrix: index out of range");
+        }
+        return this->data[index];
+    }
+
+    template <typename T>
+    Matrix<T> Matrix<T>::operator<<(const size_t shift) const
+    {
+        Matrix<T> result(*this);
+        for (size_t s = 0; s < shift && result.cols > 0; ++s)
+        {
+            result.removeColumn(0);
+        }
+        return result;
+    }
+
+    template <typename T>
+    Matrix<T> Matrix<T>::operator>>(const size_t shift) const
+    {
+        Matrix<T> result(*this);
+        for (size_t s = 0; s < shift && result.cols > 0; ++s)
+        {
+            result.removeColumn(result.cols - 1);
+        }
+        return result;
+    }
+
+    template <typename T>
+    size_t Matrix<T>::getRows() const
+    {
+        return this->rows;
+    }
+
+    template <typename T>
+    size_t Matrix<T>::getCols() const
+    {
+        return this->cols;
+    }
+
+    template <typename T>
+    void Matrix<T>::fill(const Generator& generator)
+    {
+        for (size_t i = 0; i < this->rows; ++i)
+        {
+            for (size_t j = 0; j < this->cols; ++j)
+            {
+                this->data[i][j] = generator.generate();
+            }
+        }
+    }
+
+    template <typename T>
+    string Matrix<T>::toString() const
+    {
+        ostringstream oss;
+        for (size_t i = 0; i < this->rows; ++i)
+        {
+            for (size_t j = 0; j < this->cols; ++j)
+            {
+                oss << this->data[i][j];
+                if (j + 1 < this->cols)
+                {
+                    oss << ' ';
+                }
+            }
+            oss << '\n';
+        }
+        return oss.str();
+    }
+
+    template <typename T>
+    void Matrix<T>::swap(Matrix& other) noexcept
+    {
+        swap(this->data, other.data);
+        swap(this->rows, other.rows);
+        swap(this->cols, other.cols);
+    }
+
+}
+
+template class miit::algebra::Matrix<int>;
