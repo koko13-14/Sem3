@@ -27,14 +27,6 @@ namespace
 
     constexpr int kDefaultMinValue = -100;
     constexpr int kDefaultMaxValue =  100;
-
-    const char* const kMenuText =
-        "\nВыберите способ заполнения:\n"
-        "1 - случайными числами\n"
-        "2 - вводом с клавиатуры\n"
-        "3 - нулями\n"
-        "4 - константным значением\n"
-        "Ваш выбор: ";
 }
 
 /**
