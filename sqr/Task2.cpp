@@ -1,5 +1,8 @@
 #include "Task2.h"
 #include <vector>
+#include <utility>
+
+using namespace std;
 
 miit::algebra::Task2::Task2(Matrix<int>& matrix)
     : Exercise(matrix)
@@ -21,7 +24,7 @@ void miit::algebra::Task2::solve()
 
     Matrix<int> result(newRows, oldCols);
 
-    const std::vector<int>& firstRow = this->matrix->data[0];
+    const vector<int>& firstRow = this->matrix->data[0];
 
     size_t writeIndex = 0;
     for (size_t i = 0; i < oldRows; ++i)
@@ -34,7 +37,7 @@ void miit::algebra::Task2::solve()
         }
     }
 
-    this->matrix->data = std::move(result.data);
-    this->matrix->rows = newRows;
-    this->matrix->cols = oldCols;
+    swap(this->matrix->data, result.data);
+    swap(this->matrix->rows, newRows)
+    swap(this->matrix->cols, oldCols);
 }
