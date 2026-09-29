@@ -34,10 +34,14 @@ namespace
     {
         switch (method)
         {
-            case FillMethod::Random:   return "случайные числа";
-            case FillMethod::Stream:   return "ввод с клавиатуры";
-            case FillMethod::Zero:     return "нули";
-            case FillMethod::Constant: return "константное значение";
+            case FillMethod::Random:   
+                return "случайные числа";
+            case FillMethod::Stream:   
+                return "ввод с клавиатуры";
+            case FillMethod::Zero:     
+                return "нули";
+            case FillMethod::Constant: 
+                return "константное значение";
         }
         return "";
 }
