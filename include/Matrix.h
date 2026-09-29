@@ -38,7 +38,7 @@ namespace miit::algebra
          * @param cols Количество столбцов.
          * @param generator Генератор значений.
          */
-        Matrix(const size_t rows, const size_t cols, Generator& generator);
+        Matrix(const size_t rows, const size_t cols, const Generator& generator);
 
         /**
          * @brief Конструктор копирования.
