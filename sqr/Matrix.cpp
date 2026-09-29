@@ -14,13 +14,19 @@ namespace miit::algebra
 
     template <typename T>
     Matrix<T>::Matrix(const size_t rows, const size_t cols)
-        : rows{ rows }, cols{ cols }
+        : data(rows, std::vector<T>(cols)),
+          rows{ rows },
+          cols{ cols }
     {
-        this->data.resize(rows);
-        for (size_t i = 0; i < rows; ++i)
-        {
-            this->data[i].resize(cols);
-        }
+    }
+
+    template <typename T>
+    Matrix<T>::Matrix(const size_t rows, const size_t cols, const Generator& generator)
+        : data(rows, std::vector<T>(cols)),
+          rows{ rows },
+          cols{ cols }
+    {
+        this->fill(generator);
     }
 
     template <typename T>
@@ -143,48 +149,6 @@ namespace miit::algebra
             oss << '\n';
         }
         return oss.str();
-    }
-
-    template <typename T>
-    void Matrix<T>::insertRowAfter(const vector<T>& row, const size_t pos)
-    {
-        this->data.insert(this->data.begin() + pos + 1, row);
-        ++this->rows;
-    }
-
-    template <typename T>
-    void Matrix<T>::removeRow(const size_t pos)
-    {
-        if (this->rows == 0)
-        {
-            return;
-        }
-        this->data.erase(this->data.begin() + pos);
-        --this->rows;
-    }
-
-    template <typename T>
-    void Matrix<T>::removeColumn(const size_t pos)
-    {
-        if (this->cols == 0)
-        {
-            return;
-        }
-        for (size_t i = 0; i < this->rows; ++i)
-        {
-            this->data[i].erase(this->data[i].begin() + pos);
-        }
-        --this->cols;
-    }
-
-    template <typename T>
-    void Matrix<T>::insertColumnAfter(const vector<T>& col, const size_t pos)
-    {
-        for (size_t i = 0; i < this->rows; ++i)
-        {
-            this->data[i].insert(this->data[i].begin() + pos + 1, col[i]);
-        }
-        ++this->cols;
     }
 
     template <typename T>
