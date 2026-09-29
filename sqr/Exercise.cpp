@@ -1,6 +1,6 @@
 #include "Exercise.h"
 
-miit::algebra::Exercise::Exercise(Matrix<int>* matrix)
+miit::algebra::Exercise::Exercise(const Matrix<int>* matrix)
     : matrix{ matrix }
 {
 }
