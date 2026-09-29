@@ -25,6 +25,23 @@ namespace
         Constant
     };
 
+    /**
+     * @brief Преобразует способ заполнения в строку для меню.
+     * @param method Выбранный способ заполнения.
+     * @return Текст пункта меню.
+     */
+    string toDescription(const FillMethod method)
+    {
+        switch (method)
+        {
+            case FillMethod::Random:   return "случайные числа";
+            case FillMethod::Stream:   return "ввод с клавиатуры";
+            case FillMethod::Zero:     return "нули";
+            case FillMethod::Constant: return "константное значение";
+        }
+        return "";
+}
+
     constexpr int kDefaultMinValue = -100;
     constexpr int kDefaultMaxValue =  100;
 }
@@ -44,13 +61,13 @@ int main()
     cout << "Введите количество столбцов: ";
     cin >> cols;
 
-    cout << "\nВыберите способ заполнения:\n";
+    cout << "\nКак заполнить матрицу:\n";
     for (int i = 1; i <= 4; ++i)
     {
-        const auto option = static_cast<MenuOption>(i);
-        cout << i << " - " << getMenuText(option) << '\n';
+        const auto method = static_cast<FillMethod>(i);
+        cout << i << " - " << toDescription(method) << '\n';
     }
-    cout << "Ваш выбор: ";
+    cout << "Номер пункта: ";
 
     int choice = 0;
     cin >> choice;
