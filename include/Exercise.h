@@ -17,7 +17,7 @@ namespace miit::algebra
          * @brief Конструктор.
          * @param matrix Указатель на матрицу.
          */
-        Exercise(Matrix<int>& matrix);
+        Exercise(const Matrix<int>& matrix);
 
         /**
          * @brief Виртуальный деструктор.
