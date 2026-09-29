@@ -15,7 +15,7 @@ using namespace miit::algebra;
 namespace
 {
     /**
-     * @brief Пункты меню выбора способа заполнения матрицы.
+     * @brief выбор способа заполнения матрицы.
      */
     enum class MenuOption : int
     {
