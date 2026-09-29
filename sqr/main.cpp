@@ -46,8 +46,6 @@ int main()
     cout << "Введите количество столбцов: ";
     cin >> cols;
 
-    Matrix<int> matrix(rows, cols);
-
     cout << kMenuText;
 
     int choice = 0;
@@ -80,7 +78,7 @@ int main()
         break;
     }
 
-    matrix.fill(*generator);
+    Matrix<int> matrix(rows, cols, *generator);
 
     cout << "\nИсходная матрица:\n";
     cout << matrix.toString();
