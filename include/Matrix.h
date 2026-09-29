@@ -32,6 +32,15 @@ namespace miit::algebra
         Matrix(const size_t rows, const size_t cols);
 
         /**
+         * @brief Конструктор с генератором.
+         * Матрица сразу заполняется значениями из генератора.
+         * @param rows Количество строк.
+         * @param cols Количество столбцов.
+         * @param generator Генератор значений.
+         */
+        Matrix(const size_t rows, const size_t cols, Generator& generator);
+
+        /**
          * @brief Конструктор копирования.
          */
         Matrix(const Matrix& other);
@@ -44,7 +53,7 @@ namespace miit::algebra
         /**
          * @brief Деструктор.
          */
-        ~Matrix();
+        ~Matrix() = default;
 
         /**
          * @brief Оператор присваивания копированием.
@@ -111,6 +120,7 @@ namespace miit::algebra
          */
         void swap(Matrix& other) noexcept;
 
+        friend class Task1;
         friend class Task2;
     };
 
