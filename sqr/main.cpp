@@ -14,10 +14,16 @@ using namespace miit::algebra;
 
 namespace
 {
-    constexpr int kMenuRandom    = 1;
-    constexpr int kMenuIStream   = 2;
-    constexpr int kMenuZero      = 3;
-    constexpr int kMenuConstant  = 4;
+    /**
+     * @brief Пункты меню выбора способа заполнения матрицы.
+     */
+    enum class MenuOption : int
+    {
+        Random = 1,
+        IStream,
+        Zero,
+        Constant
+    };
 
     constexpr int kDefaultMinValue = -100;
     constexpr int kDefaultMaxValue =  100;
@@ -46,7 +52,13 @@ int main()
     cout << "Введите количество столбцов: ";
     cin >> cols;
 
-    cout << kMenuText;
+    cout << "\nВыберите способ заполнения:\n";
+    for (int i = 1; i <= 4; ++i)
+    {
+        const auto option = static_cast<MenuOption>(i);
+        cout << i << " - " << getMenuText(option) << '\n';
+    }
+    cout << "Ваш выбор: ";
 
     int choice = 0;
     cin >> choice;
@@ -55,16 +67,16 @@ int main()
 
     switch (choice)
     {
-    case kMenuRandom:
+    case MenuOption::Random:
         generator = make_unique<RandomGenerator>(kDefaultMinValue, kDefaultMaxValue);
         break;
-    case kMenuIStream:
+    case MenuOption::IStream:
         generator = make_unique<IStreamGenerator>(cin);
         break;
-    case kMenuZero:
+    case MenuOption::Zero:
         generator = make_unique<ZeroGenerator>();
         break;
-    case kMenuConstant:
+    case MenuOption::Constant:
     {
         int value = 0;
         cout << "Введите константу: ";
