@@ -296,11 +296,11 @@ namespace AptekaTests
 
         TEST_METHOD(Describe_ThroughBasePointer_Polymorphic)
         {
-            std::shared_ptr<Medicine> m = std::make_shared<Mixture>(
-                "Пертуссин", CalendarDate(2027, 1, 1), "a", 10.0, "M",
-                { "кашель" }, 125.0);
+            const Mixture mixture("Пертуссин", CalendarDate(2027, 1, 1), "a", 10.0, "M",
+                std::vector<std::string>{ "кашель" }, 125.0);
+            const Medicine& m = mixture;
 
-            const std::string text = m->Describe();
+            const std::string text = m.Describe();
             Assert::IsTrue(text.find("Пертуссин") != std::string::npos);
             Assert::IsTrue(text.find("Сироп") != std::string::npos);
         }
@@ -509,17 +509,18 @@ namespace AptekaTests
     {
         const CalendarDate kBase(2026, 9, 16);
 
+        const Pills kParacetamol("Парацетамол", CalendarDate(2027, 1, 1), "a", 45.50, "M",
+            std::vector<std::string>{ "простуда", "головная боль" }, 500.0, 20);
+
+        const Mixture kMom("Доктор МОМ", CalendarDate(2027, 1, 1), "a", 210.00, "M",
+            std::vector<std::string>{ "кашель" }, 100.0);
+
         Drugstore BuildSample()
         {
             Drugstore store("Test");
 
-            store.Add(std::make_shared<Pills>(
-                "Парацетамол", CalendarDate(2027, 1, 1), "a", 45.50, "M",
-                { "простуда", "головная боль" }, 500.0, 20));
-
-            store.Add(std::make_shared<Mixture>(
-                "Доктор МОМ", CalendarDate(2027, 1, 1), "a", 210.00, "M",
-                { "кашель" }, 100.0));
+            store.Add(kParacetamol);
+            store.Add(kMom);
 
             store.Record(Purchase("Парацетамол", CalendarDate(2026, 9, 14), 3, 136.50));
             store.Record(Purchase("Парацетамол", CalendarDate(2026, 8, 25), 5, 227.50));
@@ -552,19 +553,19 @@ namespace AptekaTests
         TEST_METHOD(FindByName_CaseInsensitive)
         {
             auto found = BuildSample().FindByName("парацетамол");
-            Assert::IsNotNull(found.get());
+            Assert::IsNotNull(found);
             Assert::AreEqual(std::string("Парацетамол"), found->Title());
         }
 
         TEST_METHOD(FindByName_Exact)
         {
             auto found = BuildSample().FindByName("Доктор МОМ");
-            Assert::IsNotNull(found.get());
+            Assert::IsNotNull(found);
         }
 
         TEST_METHOD(FindByName_Missing_Null)
         {
-            Assert::IsNull(BuildSample().FindByName("Аспирин").get());
+            Assert::IsNull(BuildSample().FindByName("Аспирин"));
         }
 
         TEST_METHOD(SalesInRange_Week_OnlyRecent)
