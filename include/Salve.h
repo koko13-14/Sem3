@@ -18,7 +18,8 @@ public:
      * @param indications Болезни, при которых применяется.
      * @param massG Масса тюбика в граммах.
      */
-    Salve(std::string title, CalendarDate bestBefore, std::string summary, double cost, std::string producer, std::vector<std::string> indications, double massG);
+    Salve(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, double cost, 
+        const std::string& producer, const std::vector<std::string>& indications, double massG);
 
     /** @brief Масса тюбика, г. */
     double MassG() const;
