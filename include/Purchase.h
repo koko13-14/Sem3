@@ -17,7 +17,7 @@ public:
      * @param count Сколько единиц продано.
      * @param sum Итоговая сумма за эту покупку.
      */
-    Purchase(std::string medicine, CalendarDate date, int count, double sum);
+    Purchase(const std::string& medicine, const CalendarDate& date, int count, double sum);
 
     /** @brief Название проданного лекарства. */
     const std::string& Medicine() const;
