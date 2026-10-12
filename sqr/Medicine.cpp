@@ -1,8 +1,9 @@
 #include "Medicine.h"
 #include "TextUtils.h"
 
-Medicine::Medicine(std::string title, CalendarDate bestBefore, std::string summary, double cost, std::string producer, std::vector<std::string> indications)
-    : title_(std::move(title)), bestBefore_(bestBefore), summary_(std::move(summary)), cost_(cost), producer_(std::move(producer)), indications_(std::move(indications))
+Medicine::Medicine(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, 
+    double cost, const std::string& producer, const std::vector<std::string>& indications)
+    : title_(title), bestBefore_(bestBefore), summary_(summary), cost_(cost), producer_(producer), indications_(indications)
 {
 }
 
