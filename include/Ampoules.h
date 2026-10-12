@@ -20,8 +20,8 @@ public:
      * @param ampouleMl Объём одной ампулы в миллилитрах.
      * @param perPack Сколько ампул в упаковке.
      */
-    Ampoules(std::string title, CalendarDate bestBefore, std::string summary, double cost, 
-        std::string producer, std::vector<std::string> indications, double ampouleMl, int perPack);
+    Ampoules(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, double cost, 
+        const std::string& producer, const std::vector<std::string>& indications, double ampouleMl, int perPack);
 
     /** @brief Объём одной ампулы, мл. */
     double AmpouleMl() const;
