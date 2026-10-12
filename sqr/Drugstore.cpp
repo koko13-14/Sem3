@@ -25,11 +25,6 @@ void Drugstore::Record(const Purchase& purchase)
     log_.push_back(purchase);
 }
 
-const std::vector<const Medicine*>& Drugstore::All() const
-{
-    return items_;
-}
-
 const Medicine* Drugstore::FindByName(const std::string& name) const
 {
     for (const Medicine* item : items_)
