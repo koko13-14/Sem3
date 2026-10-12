@@ -20,8 +20,8 @@ public:
      * @param doseMg Дозировка в миллиграммах.
      * @param perPack Сколько таблеток в упаковке.
      */
-    Pills(std::string title, CalendarDate bestBefore, std::string summary, double cost, 
-        std::string producer, std::vector<std::string> indications, double doseMg, int perPack);
+    Pills(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, double cost, 
+        const std::string& producer, const std::vector<std::string>& indications, double doseMg, int perPack);
 
     /** @brief Дозировка в миллиграммах. */
     double DoseMg() const;
