@@ -1,8 +1,9 @@
 #include "Salve.h"
 #include "TextUtils.h"
 
-Salve::Salve(std::string title, CalendarDate bestBefore, std::string summary, double cost, std::string producer, std::vector<std::string> indications, double massG)
-    : Medicine(std::move(title), bestBefore, std::move(summary), cost, std::move(producer), std::move(indications)), massG_(massG)
+Salve::Salve(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, 
+    double cost, const std::string& producer, const std::vector<std::string>& indications, double massG)
+    : Medicine(title, bestBefore, summary, cost, producer, indications), massG_(massG)
 {
 }
 
