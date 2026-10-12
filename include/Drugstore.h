@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -25,16 +24,16 @@ public:
      * @brief Создать пустую аптеку с названием.
      * @param name Название аптеки.
      */
-    explicit Drugstore(std::string name);
+    explicit Drugstore(const std::string& name);
 
     /** @brief Yазвание аптеки. */
     const std::string& Name() const;
 
     /**
      * @brief Добавить лекарство в справочник.
-     * @param item Указатель на Medicine или его наследника.
+     * @param item Лекарство (Medicine или его наследник).
      */
-    void Add(std::shared_ptr<Medicine> item);
+    void Add(const Medicine& item);
 
     /**
      * @brief Добавить запись в журнал покупок.
@@ -45,14 +44,14 @@ public:
     // Задание 1: данные о лекарствах 
 
     /** @brief Весь справочник лекарств. */
-    const std::vector<std::shared_ptr<Medicine>>& All() const;
+    const std::vector<const Medicine*>& All() const;
 
     /**
      * @brief Найти лекарство по названию без учёта регистра.
      * @param name Что искать.
      * @return Указатель на найденное лекарство или nullptr.
      */
-    std::shared_ptr<Medicine> FindByName(const std::string& name) const;
+    const Medicine* FindByName(const std::string& name) const;
 
     // Задание 2: продажи за период 
 
@@ -90,11 +89,11 @@ public:
      * @param illness Название болезни (без учёта регистра).
      * @return Подходящие лекарства в порядке следования в справочнике.
      */
-    std::vector<std::shared_ptr<Medicine>> ForIllness(const std::string& illness) const;
+    std::vector<const Medicine*> ForIllness(const std::string& illness) const;
 
 private:
     std::string name_;
-    std::vector<std::shared_ptr<Medicine>> items_;
+    std::vector<const Medicine*> items_;
     std::vector<Purchase> log_;
 
     /**
@@ -108,5 +107,5 @@ private:
      * @brief Попадает ли @p saleDate в окно @p range дней до @p base
      * включительно.
      */
-    bool FitsRange(const CalendarDate& saleDate, const CalendarDate& base, ReportRange range) const;
+    static bool FitsRange(const CalendarDate& saleDate, const CalendarDate& base, ReportRange range);
 };
