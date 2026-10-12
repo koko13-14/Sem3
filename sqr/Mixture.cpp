@@ -1,8 +1,9 @@
 #include "Mixture.h"
 #include "TextUtils.h"
 
-Mixture::Mixture(std::string title, CalendarDate bestBefore, std::string summary, double cost,  std::string producer, std::vector<std::string> indications, double volumeMl)
-    : Medicine(std::move(title), bestBefore, std::move(summary), cost, std::move(producer), std::move(indications)), volumeMl_(volumeMl)
+Mixture::Mixture(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, 
+    double cost, const std::string& producer, const std::vector<std::string>& indications, double volumeMl)
+    : Medicine(title, bestBefore, summary, cost, producer, indications), volumeMl_(volumeMl)
 {
 }
 
