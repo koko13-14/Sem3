@@ -1,8 +1,8 @@
 #include "Purchase.h"
 #include "TextUtils.h"
 
-Purchase::Purchase(std::string medicine, CalendarDate date, int count, double sum) 
-    : medicine_(std::move(medicine)), date_(date), count_(count), sum_(sum)
+Purchase::Purchase(const std::string& medicine, const CalendarDate& date, int count, double sum)
+    : medicine_(medicine), date_(date), count_(count), sum_(sum)
 {
 }
 
