@@ -1,18 +1,23 @@
 #include "Drugstore.h"
 #include "TextUtils.h"
 
-Drugstore::Drugstore(std::string name): name_(std::move(name))
+Drugstore::Drugstore(const std::string& name) : name_(name)
 {
 }
 
-const std::string& Drugstore::Name() const 
-{ 
-    return name_; 
+const std::string& Drugstore::Name() const
+{
+    return name_;
 }
 
-void Drugstore::Add(std::shared_ptr<Medicine> item)
+void Drugstore::Add(const Medicine& item)
 {
-    items_.push_back(std::move(item));
+    items_.push_back(&item);
+}
+
+const std::vector<const Medicine*>& Drugstore::All() const
+{
+    return items_;
 }
 
 void Drugstore::Record(const Purchase& purchase)
@@ -20,14 +25,14 @@ void Drugstore::Record(const Purchase& purchase)
     log_.push_back(purchase);
 }
 
-const std::vector<std::shared_ptr<Medicine>>& Drugstore::All() const
+const std::vector<const Medicine*>& Drugstore::All() const
 {
     return items_;
 }
 
-std::shared_ptr<Medicine> Drugstore::FindByName(const std::string& name) const
+const Medicine* Drugstore::FindByName(const std::string& name) const
 {
-    for (const auto& item : items_)
+    for (const Medicine* item : items_)
     {
         if (TextUtils::SameIgnoreCase(item->Title(), name))
         {
@@ -51,7 +56,7 @@ int Drugstore::RangeDays(ReportRange range)
     return 0;
 }
 
-bool Drugstore::FitsRange(const CalendarDate& saleDate, const CalendarDate& base, ReportRange range) const
+bool Drugstore::FitsRange(const CalendarDate& saleDate, const CalendarDate& base, ReportRange range) 
 {
     const long ago = saleDate.DaysTo(base);
     return ago >= 0 && ago <= RangeDays(range);
@@ -93,10 +98,10 @@ double Drugstore::TotalIncome(const std::string& medicine, ReportRange range, co
     return total;
 }
 
-std::vector<std::shared_ptr<Medicine>> Drugstore::ForIllness(const std::string& illness) const
+std::vector<const Medicine*> Drugstore::ForIllness(const std::string& illness) const
 {
-    std::vector<std::shared_ptr<Medicine>> result;
-    for (const auto& item : items_)
+    std::vector<const Medicine*> result;
+    for (const Medicine* item : items_)
     {
         if (item->HelpsWith(illness))
         {
