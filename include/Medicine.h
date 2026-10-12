@@ -24,7 +24,8 @@ public:
      * @param producer Изготовитель.
      * @param indications Болезни, при которых лекарство применяется.
      */
-    Medicine(std::string title, CalendarDate bestBefore, std::string summary, double cost, std::string producer, std::vector<std::string> indications);
+    Medicine(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, 
+        double cost, const std::string& producer, const std::vector<std::string>& indications);
 
     /** @brief Виртуальный деструктор — нужен для корректного удаления наследников через базовый указатель. */
     virtual ~Medicine() = default;
