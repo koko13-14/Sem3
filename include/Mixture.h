@@ -18,7 +18,8 @@ public:
      * @param indications Болезни, при которых применяется.
      * @param volumeMl Объём флакона в миллилитрах.
      */
-    Mixture(std::string title, CalendarDate bestBefore, std::string summary, double cost, std::string producer, std::vector<std::string> indications, double volumeMl);
+    Mixture(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, 
+        double cost, const std::string& producer, const std::vector<std::string>& indications, double volumeMl);
 
     /** @brief Объём флакона, мл. */
     double VolumeMl() const;
