@@ -1,8 +1,8 @@
 #include "Ampoules.h"
 #include "TextUtils.h"
 
-Ampoules::Ampoules(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, double cost,
-    const std::string& producer, const std::vector<std::string>& indications, double ampouleMl, int perPack)
+Ampoules::Ampoules(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, const double cost,
+    const std::string& producer, const std::vector<std::string>& indications, const double ampouleMl, const int perPack)
     : Medicine(title, bestBefore, summary, cost, producer, indications), ampouleMl_(ampouleMl), perPack_(perPack)
 {
 }
