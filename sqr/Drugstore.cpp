@@ -25,7 +25,7 @@ void Drugstore::Record(const Purchase& purchase)
     log_.push_back(purchase);
 }
 
-const Medicine* Drugstore::FindByName(const std::string& name) const
+const Medicine& Drugstore::FindByName(const std::string& name) const
 {
     for (const Medicine* item : items_)
     {
@@ -57,7 +57,7 @@ bool Drugstore::FitsRange(const CalendarDate& saleDate, const CalendarDate& base
     return ago >= 0 && ago <= RangeDays(range);
 }
 
-std::vector<Purchase> Drugstore::SalesInRange(const std::string& medicine, ReportRange range, const CalendarDate& base) const
+std::vector<Purchase> Drugstore::SalesInRange(const std::string& medicine, const ReportRange range, const CalendarDate& base) const
 {
     std::vector<Purchase> result;
 
@@ -73,7 +73,7 @@ std::vector<Purchase> Drugstore::SalesInRange(const std::string& medicine, Repor
     return result;
 }
 
-int Drugstore::TotalSold(const std::string& medicine, ReportRange range, const CalendarDate& base) const
+int Drugstore::TotalSold(const std::string& medicine, const ReportRange range, const CalendarDate& base) const
 {
     int total = 0;
     for (const auto& p : SalesInRange(medicine, range, base))
@@ -83,7 +83,7 @@ int Drugstore::TotalSold(const std::string& medicine, ReportRange range, const C
     return total;
 }
 
-double Drugstore::TotalIncome(const std::string& medicine, ReportRange range, const CalendarDate& base) const
+double Drugstore::TotalIncome(const std::string& medicine, const ReportRange range, const CalendarDate& base) const
 {
     double total = 0.0;
     for (const auto& p : SalesInRange(medicine, range, base))
