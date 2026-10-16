@@ -44,14 +44,14 @@ public:
     // Задание 1: данные о лекарствах 
 
     /** @brief Весь справочник лекарств. */
-    const std::vector<const Medicine*>& All() const;
+    const std::vector<const Medicine&> All() const;
 
     /**
      * @brief Найти лекарство по названию без учёта регистра.
      * @param name Что искать.
      * @return Указатель на найденное лекарство или nullptr.
      */
-    const Medicine* FindByName(const std::string& name) const;
+    const Medicine& FindByName(const std::string& name) const;
 
     // Задание 2: продажи за период 
 
