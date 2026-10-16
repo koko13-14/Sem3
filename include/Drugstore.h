@@ -62,7 +62,7 @@ public:
      * @param base Опорная дата.
      * @return Подходящие записи.
      */
-    std::vector<Purchase> SalesInRange(const std::string& medicine, ReportRange range, const CalendarDate& base) const;
+    std::vector<Purchase> SalesInRange(const std::string& medicine, const ReportRange range, const CalendarDate& base) const;
 
     /**
      * @brief Суммарное количество проданных единиц за период.
@@ -71,7 +71,7 @@ public:
      * @param base Опорная дата.
      * @return Сумма Count() по всем подходящим покупкам.
      */
-    int TotalSold(const std::string& medicine, ReportRange range, const CalendarDate& base) const;
+    int TotalSold(const std::string& medicine, const ReportRange range, const CalendarDate& base) const;
 
     /**
      * @brief Суммарная выручка за период.
@@ -80,7 +80,7 @@ public:
      * @param base Опорная дата.
      * @return Сумма Sum() по всем подходящим покупкам.
      */
-    double TotalIncome(const std::string& medicine, ReportRange range, const CalendarDate& base) const;
+    double TotalIncome(const std::string& medicine, const ReportRange range, const CalendarDate& base) const;
 
     // Задание 3: лекарства для выбранной болезни 
 
