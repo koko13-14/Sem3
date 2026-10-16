@@ -32,7 +32,7 @@ namespace
     }
 }
 
-void CalendarDate::EnsureValid(int year, int month, int day)
+void CalendarDate::EnsureValid(const int year, const int month, const int day)
 {
     if (month < 1 || month > 12)
     {
