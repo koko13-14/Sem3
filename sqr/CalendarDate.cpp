@@ -10,7 +10,7 @@ namespace
         return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
     }
 
-    int LastDayOfMonth(int year, int month)
+    int LastDayOfMonth(const int year, const int month)
     {
         static const int table[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         if (month == 2 && IsLeap(year))
@@ -21,7 +21,7 @@ namespace
     }
 
     // Алгоритм Говарда Хиннанта: перевод гражданской даты в дни от 1970-01-01.
-    long CivilToSerial(int y, unsigned m, unsigned d)
+    long CivilToSerial(const int y, const unsigned m, const unsigned d)
     {
         y -= (m <= 2);
         const long era = (y >= 0 ? y : y - 399) / 400;
@@ -44,7 +44,7 @@ void CalendarDate::EnsureValid(const int year, const int month, const int day)
     }
 }
 
-CalendarDate::CalendarDate(int year, int month, int day): year_(year), month_(month), day_(day)
+CalendarDate::CalendarDate(const int year, const int month, const int day): year_(year), month_(month), day_(day)
 {
     EnsureValid(year_, month_, day_);
 }
