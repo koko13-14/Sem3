@@ -18,7 +18,7 @@ public:
      * @param month Номер месяца, 1..12.
      * @param day День месяца.
      */
-    CalendarDate(int year, int month, int day);
+    CalendarDate(const int year, const int month, const int day);
 
     /**
      * @brief Восстановить дату из строки вида "ГГГГ-ММ-ДД".
