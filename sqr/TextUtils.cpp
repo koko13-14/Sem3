@@ -66,7 +66,7 @@ namespace
 
 namespace TextUtils
 {
-    std::string Number(double value)
+    std::string Number(const double value)
     {
         const bool negative = value < 0.0;
         const double absValue = negative ? -value : value;
@@ -80,7 +80,7 @@ namespace TextUtils
         return sign + std::to_string(whole) + "." + fracPart;
     }
 
-    std::string Money(double value)
+    std::string Money(const double value)
     {
         return Number(value);
     }
