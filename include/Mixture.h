@@ -19,7 +19,7 @@ public:
      * @param volumeMl Объём флакона в миллилитрах.
      */
     Mixture(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, 
-        double cost, const std::string& producer, const std::vector<std::string>& indications, double volumeMl);
+       const double cost, const std::string& producer, const std::vector<std::string>& indications, const double volumeMl);
 
     /** @brief Объём флакона, мл. */
     double VolumeMl() const;
