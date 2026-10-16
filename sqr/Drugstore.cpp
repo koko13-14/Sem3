@@ -86,7 +86,7 @@ int Drugstore::TotalSold(const std::string& medicine, const ReportRange range, c
     return total;
 }
 
-double Drugstore::TotalIncome(const std::string& medicine, ReportRange range, const CalendarDate& base) const
+double Drugstore::TotalIncome(const std::string& medicine, const ReportRange range, const CalendarDate& base) const
 {
     double total = 0.0;
     for (const auto& p : SalesInRange(medicine, range, base))
