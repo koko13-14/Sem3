@@ -1,8 +1,8 @@
 #include "Pills.h"
 #include "TextUtils.h"
 
-Pills::Pills(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, double cost,
-    const std::string& producer, const std::vector<std::string>& indications, double doseMg, int perPack)
+Pills::Pills(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, const double cost,
+    const std::string& producer, const std::vector<std::string>& indications, const double doseMg, const int perPack)
     : Medicine(title, bestBefore, summary, cost, producer, indications), doseMg_(doseMg), perPack_(perPack)
 {
 }
