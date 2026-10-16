@@ -96,7 +96,7 @@ double Drugstore::TotalIncome(const std::string& medicine, const ReportRange ran
 std::vector<const Medicine&> Drugstore::ForIllness(const std::string& illness) const
 {
     std::vector<const Medicine&> result;
-    for (const Medicine* item : items_)
+    for (const Medicine& item : items_)
     {
         if (item->HelpsWith(illness))
         {
