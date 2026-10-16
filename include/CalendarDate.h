@@ -81,5 +81,5 @@ private:
     /**
      * @brief Убедиться, что (year, month, day) — существующая дата.
      */
-    static void EnsureValid(int year, int month, int day);
+    static void EnsureValid(const int year, const int month, const int day);
 };
