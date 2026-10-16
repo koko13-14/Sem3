@@ -1,139 +1,85 @@
-#include "CalendarDate.h"
+#pragma once
 
-#include <cstdlib>
-#include <stdexcept>
+#include <string>
 
-namespace
+/**
+ * @brief Календарная дата (год, месяц, день) без времени суток.
+ *
+ * Не обращается к <ctime>, локали и потокам ввода-вывода. Используется
+ * в Medicine (срок годности), Purchase (дата покупки) и Drugstore
+ * (для отчётов за период).
+ */
+class CalendarDate
 {
-    bool IsLeap(int y)
-    {
-        return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
-    }
+public:
+    /**
+     * @brief Собрать дату из трёх чисел.
+     * @param year Год.
+     * @param month Номер месяца, 1..12.
+     * @param day День месяца.
+     */
+    CalendarDate(const int year, const int month, const int day);
 
-    int LastDayOfMonth(int year, int month)
-    {
-        static const int table[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        if (month == 2 && IsLeap(year))
-        {
-            return 29;
-        }
-        return table[month - 1];
-    }
+    /**
+     * @brief Восстановить дату из строки вида "ГГГГ-ММ-ДД".
+     * @param text Текст, например "2026-10-3".
+     * @return Дата, соответствующая строке.
+     */
+    static CalendarDate FromString(const std::string& text);
 
-    // Алгоритм Говарда Хиннанта: перевод гражданской даты в дни от 1970-01-01.
-    long CivilToSerial(int y, unsigned m, unsigned d)
-    {
-        y -= (m <= 2);
-        const long era = (y >= 0 ? y : y - 399) / 400;
-        const unsigned yoe = static_cast<unsigned>(y - era * 400);
-        const unsigned doy = (153u * (m > 2 ? m - 3u : m + 9u) + 2u) / 5u + d - 1u;
-        const unsigned doe = yoe * 365u + yoe / 4u - yoe / 100u + doy;
-        return era * 146097L + static_cast<long>(doe) - 719468L;
-    }
-}
+    /** @brief Год. */
+    int Year() const;
 
-void CalendarDate::EnsureValid(const int year, const int month, const int day)
-{
-    if (month < 1 || month > 12)
-    {
-        throw std::invalid_argument("CalendarDate: месяц вне диапазона 1..12");
-    }
-    if (day < 1 || day > LastDayOfMonth(year, month))
-    {
-        throw std::invalid_argument("CalendarDate: день не существует в этом месяце");
-    }
-}
+    /** @brief Номер месяца, 1..12. */
+    int Month() const;
 
-CalendarDate::CalendarDate(int year, int month, int day): year_(year), month_(month), day_(day)
-{
-    EnsureValid(year_, month_, day_);
-}
+    /** @brief День месяца. */
+    int Day() const;
 
-CalendarDate CalendarDate::FromString(const std::string& text)
-{
-    if (text.size() != 10 || text[4] != '-' || text[7] != '-')
-    {
-        throw std::invalid_argument("CalendarDate::FromString: нужен формат ГГГГ-ММ-ДД");
-    }
+    /**
+     * @brief Текстовое представление в формате "ГГГГ-ММ-ДД".
+     * Месяц и день при необходимости дополняются нулём слева.
+     */
+    std::string AsString() const;
 
-    for (std::size_t i = 0; i < text.size(); ++i)
-    {
-        if (i == 4 || i == 7) continue;
-        if (text[i] < '0' || text[i] > '9')
-        {
-            throw std::invalid_argument("CalendarDate::FromString: нужен формат ГГГГ-ММ-ДД");
-        }
-    }
+    /**
+     * @brief Условный номер дня относительно начала отсчёта.
+     * Чем позже дата, тем больше значение. Удобно для сравнения и подсчёта разницы в днях.
+     */
+    long Serial() const;
 
-    const int y = std::atoi(text.substr(0, 4).c_str());
-    const int m = std::atoi(text.substr(5, 2).c_str());
-    const int d = std::atoi(text.substr(8, 2).c_str());
+    /**
+     * @brief Сколько дней проходит от текущей даты до @p other.
+     * @param other Дата, до которой считаем.
+     * @return Положительное число, если @p other позже; отрицательное, если раньше; ноль для той же даты.
+     */
+    long DaysTo(const CalendarDate& other) const;
 
-    return CalendarDate(y, m, d);
-}
+    /** @brief true, если год, месяц и день совпадают. */
+    bool operator==(const CalendarDate& other) const;
 
-int CalendarDate::Year() const 
-{ 
-    return year_; 
-}
+    /** @brief true, если даты различаются хотя бы одним полем. */
+    bool operator!=(const CalendarDate& other) const;
 
-int CalendarDate::Month() const
-{ 
-    return month_; 
-}
+    /** @brief true, если текущая дата строго раньше @p other. */
+    bool operator<(const CalendarDate& other) const;
 
-int CalendarDate::Day() const 
-{
-    return day_;
-}
+    /** @brief true, если текущая дата не позже @p other. */
+    bool operator<=(const CalendarDate& other) const;
 
-std::string CalendarDate::AsString() const
-{
-    auto two = [](int v) {
-        std::string s = std::to_string(v);
-        if (s.size() < 2) s = "0" + s;
-        return s;
-        };
+    /** @brief true, если текущая дата строго позже @p other. */
+    bool operator>(const CalendarDate& other) const;
 
-    return std::to_string(year_) + "-" + two(month_) + "-" + two(day_);
-}
+    /** @brief true, если текущая дата не раньше @p other. */
+    bool operator>=(const CalendarDate& other) const;
 
-long CalendarDate::Serial() const
-{
-    return CivilToSerial(year_, static_cast<unsigned>(month_), static_cast<unsigned>(day_));
-}
+private:
+    int year_ = 0;
+    int month_ = 0;
+    int day_ = 0;
 
-long CalendarDate::DaysTo(const CalendarDate& other) const
-{
-    return other.Serial() - Serial();
-}
-
-bool CalendarDate::operator==(const CalendarDate& other) const
-{
-    return year_ == other.year_ && month_ == other.month_ && day_ == other.day_;
-}
-
-bool CalendarDate::operator!=(const CalendarDate& other) const
-{
-    return !(*this == other); 
-}
-
-bool CalendarDate::operator< (const CalendarDate& other) const 
-{ 
-    return Serial() < other.Serial(); 
-}
-
-bool CalendarDate::operator<=(const CalendarDate& other) const 
-{ 
-    return Serial() <= other.Serial(); 
-}
-
-bool CalendarDate::operator> (const CalendarDate& other) const 
-{ 
-    return Serial() > other.Serial(); 
-}
-
-bool CalendarDate::operator>=(const CalendarDate& other) const 
-{ 
-    return Serial() >= other.Serial(); 
-}
+    /**
+     * @brief Убедиться, что (year, month, day) — существующая дата.
+     */
+    static void EnsureValid(const int year, const int month, const int day);
+};
