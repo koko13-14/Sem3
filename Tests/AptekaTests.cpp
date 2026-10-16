@@ -1,7 +1,6 @@
 #include "CppUnitTest.h"
 #include "../Task2(11)/AptekaLibrary.h"
 
-#include <memory>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -293,29 +292,12 @@ namespace AptekaTests
             Pills p("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 1.0, 1);
             Assert::IsTrue(p.Describe().find("не указано") != std::string::npos);
         }
-
-        TEST_METHOD(Describe_ThroughBasePointer_Polymorphic)
-        {
-            const Mixture mixture("Пертуссин", CalendarDate(2027, 1, 1), "a", 10.0, "M",
-                std::vector<std::string>{ "кашель" }, 125.0);
-            const Medicine& m = mixture;
-
-            const std::string text = m.Describe();
-            Assert::IsTrue(text.find("Пертуссин") != std::string::npos);
-            Assert::IsTrue(text.find("Сироп") != std::string::npos);
-        }
     };
 
     // --- Pills ---
     TEST_CLASS(PillsTests)
     {
     public:
-        TEST_METHOD(DescribeForm_ReturnsTabletki)
-        {
-            Pills p("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 1.0, 1);
-            Assert::AreEqual(std::string("Таблетки"), p.DescribeForm());
-        }
-
         TEST_METHOD(DoseMg_ReturnsCtorValue)
         {
             Pills p("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 500.0, 1);
@@ -333,12 +315,6 @@ namespace AptekaTests
     TEST_CLASS(MixtureTests)
     {
     public:
-        TEST_METHOD(DescribeForm_ReturnsSirop)
-        {
-            Mixture m("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 100.0);
-            Assert::AreEqual(std::string("Сироп"), m.DescribeForm());
-        }
-
         TEST_METHOD(VolumeMl_ReturnsCtorValue)
         {
             Mixture m("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 125.0);
@@ -356,12 +332,6 @@ namespace AptekaTests
     TEST_CLASS(SalveTests)
     {
     public:
-        TEST_METHOD(DescribeForm_ReturnsMaz)
-        {
-            Salve s("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 20.0);
-            Assert::AreEqual(std::string("Мазь"), s.DescribeForm());
-        }
-
         TEST_METHOD(MassG_ReturnsCtorValue)
         {
             Salve s("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 30.0);
@@ -379,13 +349,6 @@ namespace AptekaTests
     TEST_CLASS(AmpoulesTests)
     {
     public:
-        TEST_METHOD(DescribeForm_ReturnsAmpuly)
-        {
-            Ampoules a("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 3.0, 5);
-            Assert::AreEqual(std::string("Ампулы (раствор для инъекций)"),
-                a.DescribeForm());
-        }
-
         TEST_METHOD(AmpouleMl_ReturnsCtorValue)
         {
             Ampoules a("X", CalendarDate(2027, 1, 1), "a", 10.0, "M", {}, 3.0, 5);
@@ -503,24 +466,23 @@ namespace AptekaTests
     };
 
     // =====================================================================
-    //  Drugstore — все три задания
+    //  Drugstore
     // =====================================================================
     namespace
     {
         const CalendarDate kBase(2026, 9, 16);
 
-        const Pills kParacetamol("Парацетамол", CalendarDate(2027, 1, 1), "a", 45.50, "M",
-            std::vector<std::string>{ "простуда", "головная боль" }, 500.0, 20);
-
-        const Mixture kMom("Доктор МОМ", CalendarDate(2027, 1, 1), "a", 210.00, "M",
-            std::vector<std::string>{ "кашель" }, 100.0);
-
         Drugstore BuildSample()
         {
             Drugstore store("Test");
 
-            store.Add(kParacetamol);
-            store.Add(kMom);
+            store.Add(Pills(
+                "Парацетамол", CalendarDate(2027, 1, 1), "a", 45.50, "M",
+                { "простуда", "головная боль" }, 500.0, 20));
+
+            store.Add(Mixture(
+                "Доктор МОМ", CalendarDate(2027, 1, 1), "a", 210.00, "M",
+                { "кашель" }, 100.0));
 
             store.Record(Purchase("Парацетамол", CalendarDate(2026, 9, 14), 3, 136.50));
             store.Record(Purchase("Парацетамол", CalendarDate(2026, 8, 25), 5, 227.50));
@@ -552,20 +514,31 @@ namespace AptekaTests
 
         TEST_METHOD(FindByName_CaseInsensitive)
         {
-            auto found = BuildSample().FindByName("парацетамол");
-            Assert::IsNotNull(found);
-            Assert::AreEqual(std::string("Парацетамол"), found->Title());
+            const Medicine found = BuildSample().FindByName("парацетамол");
+            Assert::AreEqual(std::string("Парацетамол"), found.Title());
         }
 
         TEST_METHOD(FindByName_Exact)
         {
-            auto found = BuildSample().FindByName("Доктор МОМ");
-            Assert::IsNotNull(found);
+            const Medicine found = BuildSample().FindByName("Доктор МОМ");
+            Assert::AreEqual(std::string("Доктор МОМ"), found.Title());
         }
 
-        TEST_METHOD(FindByName_Missing_Null)
+        TEST_METHOD(FindByName_Missing_EmptyTitle)
         {
-            Assert::IsNull(BuildSample().FindByName("Аспирин"));
+            const Medicine found = BuildSample().FindByName("Аспирин");
+            Assert::IsTrue(found.Title().empty());
+        }
+
+        TEST_METHOD(FindIndexByName_Found)
+        {
+            Assert::AreEqual(std::size_t(0), BuildSample().FindIndexByName("Парацетамол"));
+        }
+
+        TEST_METHOD(FindIndexByName_NotFound_ReturnsSize)
+        {
+            const Drugstore store = BuildSample();
+            Assert::AreEqual(store.All().size(), store.FindIndexByName("Аспирин"));
         }
 
         TEST_METHOD(SalesInRange_Week_OnlyRecent)
@@ -652,14 +625,14 @@ namespace AptekaTests
         {
             const auto list = BuildSample().ForIllness("кашель");
             Assert::AreEqual(std::size_t(1), list.size());
-            Assert::AreEqual(std::string("Доктор МОМ"), list[0]->Title());
+            Assert::AreEqual(std::string("Доктор МОМ"), list[0].Title());
         }
 
         TEST_METHOD(ForIllness_Headache_One)
         {
             const auto list = BuildSample().ForIllness("головная боль");
             Assert::AreEqual(std::size_t(1), list.size());
-            Assert::AreEqual(std::string("Парацетамол"), list[0]->Title());
+            Assert::AreEqual(std::string("Парацетамол"), list[0].Title());
         }
 
         TEST_METHOD(ForIllness_CaseInsensitive)
