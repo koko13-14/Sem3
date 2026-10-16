@@ -37,7 +37,7 @@ const Medicine* Drugstore::FindByName(const std::string& name) const
     return nullptr;
 }
 
-int Drugstore::RangeDays(ReportRange range)
+int Drugstore::RangeDays(const ReportRange range)
 {
     switch (range)
     {
@@ -51,7 +51,7 @@ int Drugstore::RangeDays(ReportRange range)
     return 0;
 }
 
-bool Drugstore::FitsRange(const CalendarDate& saleDate, const CalendarDate& base, ReportRange range) 
+bool Drugstore::FitsRange(const CalendarDate& saleDate, const CalendarDate& base, const ReportRange range) 
 {
     const long ago = saleDate.DaysTo(base);
     return ago >= 0 && ago <= RangeDays(range);
@@ -93,7 +93,7 @@ double Drugstore::TotalIncome(const std::string& medicine, ReportRange range, co
     return total;
 }
 
-std::vector<const Medicine*> Drugstore::ForIllness(const std::string& illness) const
+std::vector<const Medicine&> Drugstore::ForIllness(const std::string& illness) const
 {
     std::vector<const Medicine*> result;
     for (const Medicine* item : items_)
