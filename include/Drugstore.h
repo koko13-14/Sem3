@@ -89,7 +89,7 @@ public:
      * @param illness Название болезни (без учёта регистра).
      * @return Подходящие лекарства в порядке следования в справочнике.
      */
-    std::vector<const Medicine*> ForIllness(const std::string& illness) const;
+    std::vector<const Medicine&> ForIllness(const std::string& illness) const;
 
 private:
     std::string name_;
@@ -101,11 +101,11 @@ private:
      * @param range Длина окна.
      * @return 7, 30 или 365.
      */
-    static int RangeDays(ReportRange range);
+    static int RangeDays(const ReportRange range);
 
     /**
      * @brief Попадает ли @p saleDate в окно @p range дней до @p base
      * включительно.
      */
-    static bool FitsRange(const CalendarDate& saleDate, const CalendarDate& base, ReportRange range);
+    static bool FitsRange(const CalendarDate& saleDate, const CalendarDate& base, const ReportRange range);
 };
