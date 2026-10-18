@@ -2,9 +2,7 @@
 #include "Medicine.h"
 
 /**
- * @brief Лекарство в форме ампул (раствор для инъекций).
- * Помимо общих полей Medicine хранит объём одной ампулы и количество
- * ампул в упаковке.
+ * @brief Лекарство в форме ампул.
  */
 class Ampoules : public Medicine
 {
@@ -17,26 +15,33 @@ public:
      * @param cost Цена.
      * @param producer Изготовитель.
      * @param indications Болезни, при которых применяется.
-     * @param ampouleMl Объём одной ампулы в миллилитрах.
-     * @param perPack Сколько ампул в упаковке.
+     * @param ampouleMl Объём ампулы, мл.
+     * @param perPack Количество в упаковке.
      */
-    Ampoules(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, const double cost, 
-        const std::string& producer, const std::vector<std::string>& indications, const double ampouleMl, const int perPack);
+    Ampoules(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, const double cost, const std::string& producer,
+        const std::vector<std::string>& indications, const double ampouleMl, const int perPack);
 
-    /** @brief Объём одной ампулы, мл. */
+    /**
+     * @brief Получить объём одной ампулы.
+     * @return Объём в миллилитрах.
+     */
     double AmpouleMl() const;
 
-    /** @brief Количество ампул в упаковке. */
+    /**
+     * @brief Получить количество ампул в упаковке.
+     * @return Количество ампул.
+     */
     int PerPack() const;
-
-    /** @brief Форма выпуска: "Ампулы (раствор для инъекций)". */
-    std::string DescribeForm() const override;
-
-protected:
-    /** @brief Объём ампулы и количество в упаковке одной строкой. */
-    std::string DescribeDetails() const override;
 
 private:
     double ampouleMl_ = 0.0;
     int perPack_ = 0;
+
+    /**
+     * @brief Сформировать строку с объёмом ампулы и количеством.
+     * @param ampouleMl Объём, мл.
+     * @param perPack Количество в упаковке.
+     * @return Строка для базового класса.
+     */
+    static std::string MakeDetails(const double ampouleMl, const int perPack);
 };
