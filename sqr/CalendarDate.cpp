@@ -5,7 +5,7 @@
 
 namespace
 {
-    bool IsLeap(int y)
+    bool IsLeap(const int y)
     {
         return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
     }
@@ -20,13 +20,12 @@ namespace
         return table[month - 1];
     }
 
-    // Алгоритм Говарда Хиннанта: перевод гражданской даты в дни от 1970-01-01.
-    long CivilToSerial(const int y, const unsigned m, const unsigned d)
+    long CivilToSerial(int y, const unsigned m, const unsigned d)
     {
         y -= (m <= 2);
         const long era = (y >= 0 ? y : y - 399) / 400;
         const unsigned yoe = static_cast<unsigned>(y - era * 400);
-        const unsigned doy = (153u * (m > 2 ? m - 3u : m + 9u) + 2u) / 5u + d - 1u;
+        const unsigned doy = (153u * (m + (m > 2 ? -3u : 9u)) + 2u) / 5u + d - 1u;
         const unsigned doe = yoe * 365u + yoe / 4u - yoe / 100u + doy;
         return era * 146097L + static_cast<long>(doe) - 719468L;
     }
@@ -44,7 +43,8 @@ void CalendarDate::EnsureValid(const int year, const int month, const int day)
     }
 }
 
-CalendarDate::CalendarDate(const int year, const int month, const int day): year_(year), month_(month), day_(day)
+CalendarDate::CalendarDate(const int year, const int month, const int day)
+    : year_(year), month_(month), day_(day)
 {
     EnsureValid(year_, month_, day_);
 }
@@ -77,19 +77,19 @@ int CalendarDate::Year() const
     return year_; 
 }
 
-int CalendarDate::Month() const
-{ 
+int CalendarDate::Month() const 
+{
     return month_; 
 }
 
 int CalendarDate::Day() const 
-{
-    return day_;
+{ 
+    return day_; 
 }
 
 std::string CalendarDate::AsString() const
 {
-    auto two = [](int v) {
+    auto two = [](const int v) {
         std::string s = std::to_string(v);
         if (s.size() < 2) s = "0" + s;
         return s;
@@ -113,8 +113,8 @@ bool CalendarDate::operator==(const CalendarDate& other) const
     return year_ == other.year_ && month_ == other.month_ && day_ == other.day_;
 }
 
-bool CalendarDate::operator!=(const CalendarDate& other) const
-{
+bool CalendarDate::operator!=(const CalendarDate& other) const 
+{ 
     return !(*this == other); 
 }
 
