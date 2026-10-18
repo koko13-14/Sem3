@@ -3,7 +3,6 @@
 
 /**
  * @brief Лекарство в форме сиропа.
- * Помимо общих полей Medicine хранит объём флакона в миллилитрах.
  */
 class Mixture : public Medicine
 {
@@ -16,21 +15,24 @@ public:
      * @param cost Цена.
      * @param producer Изготовитель.
      * @param indications Болезни, при которых применяется.
-     * @param volumeMl Объём флакона в миллилитрах.
+     * @param volumeMl Объём флакона, мл.
      */
-    Mixture(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, 
-       const double cost, const std::string& producer, const std::vector<std::string>& indications, const double volumeMl);
+    Mixture(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, const double cost, const std::string& producer,
+        const std::vector<std::string>& indications, const double volumeMl);
 
-    /** @brief Объём флакона, мл. */
+    /**
+     * @brief Получить объём флакона.
+     * @return Объём в миллилитрах.
+     */
     double VolumeMl() const;
-
-    /** @brief Форма выпуска: "Сироп". */
-    std::string DescribeForm() const override;
-
-protected:
-    /** @brief Объём флакона одной строкой. */
-    std::string DescribeDetails() const override;
 
 private:
     double volumeMl_ = 0.0;
+
+    /**
+     * @brief Сформировать строку с объёмом флакона.
+     * @param volumeMl Объём, мл.
+     * @return Строка для базового класса.
+     */
+    static std::string MakeDetails(const double volumeMl);
 };
