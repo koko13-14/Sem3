@@ -4,10 +4,6 @@
 
 /**
  * @brief Календарная дата (год, месяц, день) без времени суток.
- *
- * Не обращается к <ctime>, локали и потокам ввода-вывода. Используется
- * в Medicine (срок годности), Purchase (дата покупки) и Drugstore
- * (для отчётов за период).
  */
 class CalendarDate
 {
@@ -22,55 +18,88 @@ public:
 
     /**
      * @brief Восстановить дату из строки вида "ГГГГ-ММ-ДД".
-     * @param text Текст, например "2026-10-3".
+     * @param text Текст, например "2026-09-16".
      * @return Дата, соответствующая строке.
      */
     static CalendarDate FromString(const std::string& text);
 
-    /** @brief Год. */
+    /**
+     * @brief Получить год.
+     * @return Номер года.
+     */
     int Year() const;
 
-    /** @brief Номер месяца, 1..12. */
+    /**
+     * @brief Получить номер месяца.
+     * @return Число от 1 до 12.
+     */
     int Month() const;
 
-    /** @brief День месяца. */
+    /**
+     * @brief Получить день месяца.
+     * @return Число от 1 до 31.
+     */
     int Day() const;
 
     /**
-     * @brief Текстовое представление в формате "ГГГГ-ММ-ДД".
-     * Месяц и день при необходимости дополняются нулём слева.
+     * @brief Преобразовать дату в строку "ГГГГ-ММ-ДД".
+     * @return Строка с датой, месяц и день дополнены нулём слева.
      */
     std::string AsString() const;
 
     /**
      * @brief Условный номер дня относительно начала отсчёта.
-     * Чем позже дата, тем больше значение. Удобно для сравнения и подсчёта разницы в днях.
+     * @return Целое число; чем позже дата, тем больше значение.
      */
     long Serial() const;
 
     /**
-     * @brief Сколько дней проходит от текущей даты до @p other.
+     * @brief Сколько дней от текущей даты до @p other.
      * @param other Дата, до которой считаем.
-     * @return Положительное число, если @p other позже; отрицательное, если раньше; ноль для той же даты.
+     * @return Разница в днях; отрицательная, если @p other раньше.
      */
     long DaysTo(const CalendarDate& other) const;
 
-    /** @brief true, если год, месяц и день совпадают. */
+    /**
+     * @brief Проверить равенство дат.
+     * @param other Дата для сравнения.
+     * @return true, если год, месяц и день совпадают.
+     */
     bool operator==(const CalendarDate& other) const;
 
-    /** @brief true, если даты различаются хотя бы одним полем. */
+    /**
+     * @brief Проверить неравенство дат.
+     * @param other Дата для сравнения.
+     * @return true, если даты различаются.
+     */
     bool operator!=(const CalendarDate& other) const;
 
-    /** @brief true, если текущая дата строго раньше @p other. */
+    /**
+     * @brief Сравнить даты: текущая строго раньше.
+     * @param other Дата для сравнения.
+     * @return true, если текущая дата раньше @p other.
+     */
     bool operator<(const CalendarDate& other) const;
 
-    /** @brief true, если текущая дата не позже @p other. */
+    /**
+     * @brief Сравнить даты: текущая не позже.
+     * @param other Дата для сравнения.
+     * @return true, если текущая дата раньше или совпадает с @p other.
+     */
     bool operator<=(const CalendarDate& other) const;
 
-    /** @brief true, если текущая дата строго позже @p other. */
+    /**
+     * @brief Сравнить даты: текущая строго позже.
+     * @param other Дата для сравнения.
+     * @return true, если текущая дата позже @p other.
+     */
     bool operator>(const CalendarDate& other) const;
 
-    /** @brief true, если текущая дата не раньше @p other. */
+    /**
+     * @brief Сравнить даты: текущая не раньше.
+     * @param other Дата для сравнения.
+     * @return true, если текущая дата позже или совпадает с @p other.
+     */
     bool operator>=(const CalendarDate& other) const;
 
 private:
@@ -79,7 +108,10 @@ private:
     int day_ = 0;
 
     /**
-     * @brief Убедиться, что (year, month, day) — существующая дата.
+     * @brief Проверить, что (year, month, day) — существующая дата.
+     * @param year Год.
+     * @param month Месяц, 1..12.
+     * @param day День месяца.
      */
     static void EnsureValid(const int year, const int month, const int day);
 };
