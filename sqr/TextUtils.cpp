@@ -17,9 +17,7 @@ namespace
         {"Ю","ю"},{"Я","я"},{"Ё","ё"}
     };
 
-    // Возвращает указатель на пару (верхняя, нижняя) для позиции pos,
-    // либо nullptr, если в pos верхней русской буквы нет.
-    const std::pair<const char*, const char*>* FindCyrPair(const std::string& s, std::size_t pos)
+    const std::pair<const char*, const char*>* FindCyrPair(const std::string& s, const std::size_t pos)
     {
         for (const auto& p : kCyrPairs)
         {
