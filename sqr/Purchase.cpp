@@ -13,7 +13,7 @@ const std::string& Purchase::Medicine() const
 
 const CalendarDate& Purchase::Date() const 
 { 
-    return date_; 
+    return date_;
 }
 
 int Purchase::Count() const 
@@ -28,5 +28,7 @@ double Purchase::Sum() const
 
 std::string Purchase::Describe() const
 {
-    return date_.AsString() + ": " + medicine_ + " x" + std::to_string(count_) + " = " + TextUtils::Money(sum_) + " руб.";
+    return date_.AsString() + ": " + medicine_ +
+        " x" + std::to_string(count_) +
+        " = " + TextUtils::Money(sum_) + " руб.";
 }
