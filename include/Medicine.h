@@ -7,45 +7,64 @@
 /**
  * @brief Лекарство в справочнике аптеки.
  *
- * Хранит общие поля, которые есть у любой формы выпуска: название,
- * срок годности, аннотацию, цену и изготовителя. Конкретика формы
- * выпуска выносится в наследников (Pills, Mixture, Salve, Ampoules):
- * они переопределяют DescribeForm() и DescribeDetails().
+ * Хранит общие поля и строки с формой выпуска и деталями. Наследники
+ * (Pills, Mixture, Salve, Ampoules) наполняют строки формы и деталей
+ * в своём конструкторе.
  */
 class Medicine
 {
 public:
+    /** @brief Виртуальный деструктор. */
+    virtual ~Medicine() = default;
+
     /**
-     * @brief Заполнить карточку лекарства общими данными.
+     * @brief Заполнить карточку лекарства.
      * @param title Название.
      * @param bestBefore Срок годности.
      * @param summary Текст аннотации.
      * @param cost Цена.
      * @param producer Изготовитель.
      * @param indications Болезни, при которых лекарство применяется.
+     * @param form Форма выпуска ("Таблетки", "Сироп" и т.п.).
+     * @param details Сведения, зависящие от формы выпуска.
      */
-    Medicine(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, 
-        const double cost, const std::string& producer, const std::vector<std::string>& indications);
+    Medicine(const std::string& title, const CalendarDate& bestBefore, const std::string& summary, const double cost, const std::string& producer,
+        const std::vector<std::string>& indications, const std::string& form, const std::string& details);
 
-    /** @brief Виртуальный деструктор — нужен для корректного удаления наследников через базовый указатель. */
-    virtual ~Medicine() = default;
-
-    /** @brief Название лекарства. */
+    /**
+     * @brief Получить название лекарства.
+     * @return Название.
+     */
     const std::string& Title() const;
 
-    /** @brief Срок годности. */
+    /**
+     * @brief Получить срок годности.
+     * @return Дата, до которой лекарство годно.
+     */
     const CalendarDate& BestBefore() const;
 
-    /** @brief Аннотация. */
+    /**
+     * @brief Получить аннотацию.
+     * @return Текст аннотации.
+     */
     const std::string& Summary() const;
 
-    /** @brief Цена. */
+    /**
+     * @brief Получить цену.
+     * @return Цена в рублях.
+     */
     double Cost() const;
 
-    /** @brief Изготовитель. */
+    /**
+     * @brief Получить изготовителя.
+     * @return Название изготовителя.
+     */
     const std::string& Producer() const;
 
-    /** @brief Болезни, при которых применяется лекарство. */
+    /**
+     * @brief Получить список болезней, при которых применяется лекарство.
+     * @return Список названий болезней.
+     */
     const std::vector<std::string>& Indications() const;
 
     /**
@@ -63,23 +82,11 @@ public:
     bool HelpsWith(const std::string& illness) const;
 
     /**
-     * @brief Строка с описанием лекарства (задание 1 варианта).
+     * @brief Собрать строку с полным описанием лекарства.
+     * @return Название, форма, цена, изготовитель, срок годности,
+     *         список болезней, детали формы выпуска и аннотация.
      */
-    virtual std::string Describe() const;
-
-    /**
-     * @brief Название формы выпуска: "Таблетки", "Сироп" и т.п.
-     * Реализуется в каждом наследнике.
-     */
-    virtual std::string DescribeForm() const = 0;
-
-protected:
-    /**
-     * @brief Дополнительные сведения о лекарстве, зависящие от формы
-     * выпуска (дозировка, объём флакона, масса тюбика и т.п.).
-     * Реализуется в каждом наследнике.
-     */
-    virtual std::string DescribeDetails() const = 0;
+    std::string Describe() const;
 
 private:
     std::string title_;
@@ -88,4 +95,6 @@ private:
     double cost_ = 0.0;
     std::string producer_;
     std::vector<std::string> indications_;
+    std::string form_;
+    std::string details_;
 };
