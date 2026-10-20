@@ -89,12 +89,44 @@ public:
     std::string Describe() const;
 
 private:
+
+    /*
+     * @brief Название лекарства. 
+     */
     std::string title_;
+
+    /*
+     * @brief Срок годности. 
+     */
     CalendarDate bestBefore_;
+
+    /*
+     * @brief Текст инструкции/аннотации. 
+     */
     std::string summary_;
+
+    /*
+     * @brief Цена в рублях. 
+     */
     double cost_ = 0.0;
+
+    /* 
+     * @brief Название завода-изготовителя. 
+     */
     std::string producer_;
+
+    /*
+     * @brief Список болезней, от которых помогает лекарство. 
+     */
     std::vector<std::string> indications_;
+
+    /*
+     * @brief Название формы выпуска (например, "Таблетки", "Сироп"). 
+     */
     std::string form_;
+
+    /*
+     * @brief Специфичные для формы детали (дозировка, объём и т.п.). 
+     */
     std::string details_;
 };
