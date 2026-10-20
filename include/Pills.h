@@ -34,7 +34,15 @@ public:
     int PerPack() const;
 
 private:
+
+    /* 
+     * @brief Дозировка активного вещества в миллиграммах. 
+     */
     double doseMg_ = 0.0;
+
+    /*
+     * @brief Количество таблеток в одной упаковке. 
+     */
     int perPack_ = 0;
 
     /**
