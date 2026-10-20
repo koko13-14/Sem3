@@ -103,8 +103,20 @@ public:
     bool operator>=(const CalendarDate& other) const;
 
 private:
+
+    /*
+     * @brief Календарный год. 
+     */
     int year_ = 0;
+
+    /*
+     * @brief Номер месяца (от 1 до 12). 
+     */
     int month_ = 0;
+
+    /*
+     * @brief День месяца (от 1 до 31). 
+     */
     int day_ = 0;
 
     /**
