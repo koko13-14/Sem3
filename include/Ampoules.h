@@ -34,7 +34,15 @@ public:
     int PerPack() const;
 
 private:
+
+    /*
+     * @brief Объём одной ампулы в миллилитрах. 
+     */
     double ampouleMl_ = 0.0;
+
+    /*
+     * @brief Количество ампул в упаковке. 
+     */
     int perPack_ = 0;
 
     /**
