@@ -25,7 +25,7 @@ namespace
         y -= (m <= 2);
         const long era = (y >= 0 ? y : y - 399) / 400;
         const unsigned yoe = static_cast<unsigned>(y - era * 400);
-        const unsigned doy = (153u * (m + (m > 2 ? -3u : 9u)) + 2u) / 5u + d - 1u;
+        const unsigned doy = (153u * (m > 2 ? m - 3u : m + 9u) + 2u) / 5u + d - 1u;
         const unsigned doe = yoe * 365u + yoe / 4u - yoe / 100u + doy;
         return era * 146097L + static_cast<long>(doe) - 719468L;
     }
