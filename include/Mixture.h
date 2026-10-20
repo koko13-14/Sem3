@@ -27,6 +27,10 @@ public:
     double VolumeMl() const;
 
 private:
+
+    /*
+     * @brief Объём флакона с сиропом в миллилитрах. 
+     */
     double volumeMl_ = 0.0;
 
     /**
