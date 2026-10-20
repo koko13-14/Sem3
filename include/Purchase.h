@@ -48,8 +48,24 @@ public:
     std::string Describe() const;
 
 private:
+
+    /*
+     * @brief Название купленного лекарства. 
+     */
     std::string medicine_;
+
+    /*
+     * @brief Дата совершения покупки. 
+     */
     CalendarDate date_;
+
+    /*
+     * @brief Количество купленных упаковок. 
+     */
     int count_ = 0;
+
+    /*
+     * @brief Итоговая сумма покупки. 
+     */
     double sum_ = 0.0;
 };
