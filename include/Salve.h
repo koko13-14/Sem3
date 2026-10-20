@@ -27,6 +27,10 @@ public:
     double MassG() const;
 
 private:
+
+    /*
+     * @brief Масса тюбика с мазью в граммах. 
+     */
     double massG_ = 0.0;
 
     /**
