@@ -95,8 +95,20 @@ public:
     std::vector<Medicine> ForIllness(const std::string& illness) const;
 
 private:
+
+    /*
+     * @brief Название аптеки. 
+     */
     std::string name_;
+    
+    /*
+     * @brief Вектор всех лекарств, имеющихся в справочнике. 
+     */
     std::vector<Medicine> items_;
+
+    /*
+     * @brief Журнал всех зарегистрированных покупок. 
+     */
     std::vector<Purchase> log_;
 
     /**
