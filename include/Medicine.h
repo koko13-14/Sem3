@@ -14,7 +14,9 @@
 class Medicine
 {
 public:
-    /** @brief Виртуальный деструктор. */
+    /*
+     * @brief Виртуальный деструктор. 
+     */
     virtual ~Medicine() = default;
 
     /**
